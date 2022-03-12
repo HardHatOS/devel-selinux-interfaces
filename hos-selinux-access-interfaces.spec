@@ -1,25 +1,26 @@
 Name:       hos-selinux-access-interfaces
 Version:    1.0
 Release:    1%{?dist}
-Summary:    SELinux access interfaces required by the Hard Hat OS (HOS) project
+Summary:    SELinux access interfaces for the Hard Hat OS (HOS) project
 
 Group:      System Environment/Base
-License:    AGPLv3
+License:    GPLv3
 URL:        https://github.com/HardHatOS/selinux-access-interfaces
-Source0:    hardhatos.if
-BuildArch:  noarch
+Source0:    hos-access-interfaces.if
 Requires:   policycoreutils, libselinux-utils
-Requires(post):   selinux-policy-base >= %{selinux_policyver}, policycoreutils
-Requires(postun): policycoreutils
+BuildArch:  noarch
+BuildRequires: make, selinux-policy-devel
 
 %description
-SELinux access interaces required by the Hard Hat OS (HOS) project
+This package installs and sets up a hardened SELinux policy module for D-Bus.
 
-%build
+%pre
+# RPM macro that defines the SELinux directory where the interface files are placed in
+%define _contribdir %{_datadir}/selinux/devel/include/contrib
 
 %install
-install -d %{buildroot}%{_datadir}/selinux/devel/include/contrib
-install -m 644 %{SOURCE0} %{buildroot}%{_datadir}/selinux/devel/include/contrib/
+# Copy the compiled SELinux policy module to the proper directory
+%{__install} -D -m 0644 %{SOURCE0} -t %{buildroot}%{_contribdir}
 
 %files
-%{_datadir}/selinux/devel/include/contrib/hardhatos.if
+%{_contribdir}/hos-access-interfaces.if
