@@ -10,5 +10,4 @@ if [ `id -u` != 0 ]; then
 fi
 
 # Generate a rpm package for the newly generated policy
-pwd=$(pwd)
-rpmbuild --define "_sourcedir ${pwd}" --define "_specdir ${pwd}" --define "_builddir ${pwd}" --define "_srcrpmdir ${pwd}" --define "_rpmdir ${pwd}" --define "_buildrootdir ${pwd}/.build"  -ba hardhat_if_selinux.spec
+rpmbuild --define "_sourcedir $(pwd)" --define "_specdir $(pwd)" --define "_builddir $(pwd)" --define "_srcrpmdir $(pwd)" --define "_rpmdir $(pwd)" --define "_buildrootdir $(pwd)/.build"  -ba hos-selinux-access-interfaces.spec
