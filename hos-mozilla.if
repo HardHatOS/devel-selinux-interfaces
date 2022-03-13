@@ -1,0 +1,11 @@
+####################################################
+# MOZILLA
+####################################################
+#---------------------------------------------------
+interface(`hardhat_mozilla_domtrans_spec',`
+    gen_require(`
+        type mozilla_exec_t;
+    ')
+    hardhat_domain_entry_file($2, mozilla_exec_t)
+    hardhat_domtrans_pattern($1, mozilla_exec_t, $2) 
+')

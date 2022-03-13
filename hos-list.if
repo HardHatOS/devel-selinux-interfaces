@@ -1,0 +1,12 @@
+####################################################
+# LIST
+####################################################
+#---------------------------------------------------
+interface(`hardhat_list_dir_perms',`
+    allow $1 $2:dir { getattr open read search };
+')
+#---------------------------------------------------
+interface(`hardhat_list_dirs_pattern',`
+    allow $1 $2:dir { search_dir_perms };
+    hardhat_list_dir_perms($1, $3)
+')

@@ -1,0 +1,150 @@
+####################################################
+# USERDOM
+####################################################
+#---------------------------------------------------
+interface(`hardhat_userdom_list_user_home_dirs',`
+    gen_require(`
+        type user_home_dir_t;
+    ')
+    files_search_home($1)
+    hardhat_list_dir_perms($1, user_home_dir_t)
+')
+#---------------------------------------------------
+interface(`hardhat_userdom_manage_tmp_dirs',`
+    gen_require(`
+        type user_tmp_t;
+    ')
+    hardhat_manage_dirs_pattern($1, user_tmp_t, user_tmp_t)
+')
+#---------------------------------------------------
+interface(`hardhat_userdom_manage_tmp_files',`
+    gen_require(`
+        type user_tmp_t;
+    ')
+    hardhat_manage_files_pattern($1, user_tmp_t, user_tmp_t)
+')
+#---------------------------------------------------
+interface(`hardhat_userdom_manage_tmp_sockets',`
+    gen_require(`
+        type user_tmp_t;
+    ')
+    hardhat_manage_sock_files_pattern($1, user_tmp_t, user_tmp_t)
+')
+#---------------------------------------------------
+interface(`hardhat_userdom_manage_tmpfs_files',`
+    gen_require(`
+        type user_tmpfs_t;
+    ')
+    hardhat_manage_files_pattern($1, user_tmpfs_t, user_tmpfs_t)
+')
+#---------------------------------------------------
+interface(`hardhat_userdom_read_all_users_state',`
+    gen_require(`
+        attribute userdomain;
+    ')
+    hardhat_read_files_pattern($1, userdomain, userdomain)
+    kernel_search_proc($1)
+    read_lnk_files_pattern($1,userdomain,userdomain)
+')
+#---------------------------------------------------
+interface(`hardhat_userdom_rw_stream',`
+    gen_require(`
+        attribute userdomain;
+    ')
+    hardhat_rw_socket_perms($1, userdomain, unix_stream_socket)
+')
+#---------------------------------------------------
+interface(`hardhat_userdom_tmpfs_filetrans',`
+    gen_require(`
+        type user_tmpfs_t;
+    ')
+    hardhat_fs_tmpfs_filetrans($1, user_tmpfs_t, $2, $3)
+')
+#---------------------------------------------------
+interface(`hardhat_userdom_manage_user_home_content_dirs',`
+    gen_require(`
+        type user_home_dir_t, user_home_t;
+    ')
+    files_search_home($1)
+    hardhat_manage_dirs_pattern($1, user_home_dir_t, user_home_t)
+    hardhat_manage_dirs_pattern($1, user_home_t, user_home_t)
+')
+#---------------------------------------------------
+interface(`hardhat_userdom_manage_user_home_content_files',`
+    gen_require(`
+        type user_home_dir_t, user_home_t;
+    ')
+    files_search_home($1)
+    hardhat_manage_files_pattern($1, user_home_t, user_home_t)
+    allow $1 user_home_dir_t:dir { search_dir_perms };
+    allow $1 user_home_t:file { map }; 
+')
+#---------------------------------------------------
+interface(`hardhat_userdom_manage_user_tmp_chr_files',`
+    gen_require(`
+        type user_tmp_t;
+    ')
+    hardhat_manage_chr_files_pattern($1, user_tmp_t, user_tmp_t)
+')
+#---------------------------------------------------
+interface(`hardhat_userdom_manage_user_tmp_pipes',`
+    gen_require(`
+        type user_tmp_t;
+    ')
+    hardhat_manage_fifo_files_pattern($1, user_tmp_t, user_tmp_t)
+')
+#---------------------------------------------------
+interface(`hardhat_userdom_manage_user_tmp_symlinks',`
+    gen_require(`
+        type user_tmp_t;
+    ')
+    hardhat_manage_lnk_files_pattern($1, user_tmp_t, user_tmp_t)
+')
+#---------------------------------------------------
+interface(`hardhat_userdom_read_home_audio_files',`
+    gen_require(`
+        type audio_home_t;
+    ')
+    hardhat_list_dir_perms($1, audio_home_t)
+    hardhat_read_files_pattern($1, audio_home_t, audio_home_t)
+    userdom_search_user_home_dirs($1)
+    read_lnk_files_pattern($1, audio_home_t, audio_home_t)
+')
+#---------------------------------------------------
+interface(`hardhat_userdom_use_inherited_user_ptys',`
+    gen_require(`
+        type user_devpts_t;    
+    ')
+    hardhat_rw_inherited_term_perms($1, user_devpts_t, chr_file)
+')
+#---------------------------------------------------
+interface(`hardhat_userdom_use_inherited_user_ttys',`
+    gen_require(`
+        type user_tty_device_t;
+    ')
+    hardhat_rw_inherited_term_perms($1, user_tty_device_t, chr_file)
+')
+#---------------------------------------------------
+interface(`hardhat_userdom_user_home_dir_filetrans',`
+    gen_require(`
+        type user_home_dir_t;
+    ')
+    files_search_home($1)
+    hardhat_filetrans_pattern($1, user_home_dir_t, $2, $3, $4)
+')
+#---------------------------------------------------
+interface(`hardhat_userdom_user_tmp_filetrans',`
+    gen_require(`
+        type user_tmp_t;
+    ')
+    hardhat_filetrans_pattern($1, user_tmp_t, $2, $3, $4)
+    files_search_tmp($1)
+')
+#---------------------------------------------------
+interface(`hardhat_userdom_write_user_tmp_files',`
+    gen_require(`
+        type user_tmp_t;
+    ')
+    hardhat_read_files_pattern($1, user_tmp_t, user_tmp_t)
+    allow $1 user_tmp_t:file { append write };
+')

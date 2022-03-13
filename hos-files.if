@@ -1,0 +1,66 @@
+####################################################
+# FILES
+####################################################
+#---------------------------------------------------
+interface(`hardhat_files_exec_all_base_ro_files',`
+    gen_require(`
+        attribute base_ro_file_type;
+    ')
+    hardhat_can_exec($1, base_ro_file_type)
+')
+#---------------------------------------------------
+interface(`hardhat_files_list_etc',`
+    gen_require(`
+        type etc_t;
+    ')
+    hardhat_list_dir_perms($1, etc_t)
+')
+#---------------------------------------------------
+interface(`hardhat_files_list_home',`
+    gen_require(`
+        type home_root_t;
+    ')
+    allow $1 home_root_t:lnk_file { read_lnk_file_perms };
+    hardhat_list_dir_perms($1, home_root_t)
+')
+#---------------------------------------------------
+interface(`hardhat_files_manage_generic_tmp_dirs',`
+    gen_require(`
+        type tmp_t;
+    ')
+    hardhat_manage_dirs_pattern($1, tmp_t, tmp_t)
+')
+#---------------------------------------------------
+interface(`hardhat_files_manage_generic_tmp_files',`
+    gen_require(`
+        type tmp_t;
+    ')
+    hardhat_manage_files_pattern($1, tmp_t, tmp_t)
+')
+#---------------------------------------------------
+interface(`hardhat_files_pid_filetrans',`
+    gen_require(`
+        type var_t, var_run_t;
+    ')
+    allow $1 var_t:dir { search_dir_perms };
+    hardhat_filetrans_pattern($1, var_run_t, $2, $3, $4)
+')
+#---------------------------------------------------
+interface(`hardhat_files_tmp_filetrans',`
+    gen_require(`
+        type tmp_t;
+    ')
+    hardhat_filetrans_pattern($1, tmp_t, $2, $3, $4)
+')
+#---------------------------------------------------
+interface(`hardhat_files_var_filetrans',`
+    gen_require(`
+        type var_t;
+    ')
+    hardhat_filetrans_pattern($1, var_t, $2, $3, $4)
+')
+#---------------------------------------------------
+interface(`hardhat_filetrans_pattern',`
+    hardhat_rw_dir_perms($1, $2)
+    type_transition $1 $2:$4 $3 $5;
+')

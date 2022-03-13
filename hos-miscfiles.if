@@ -1,0 +1,21 @@
+####################################################
+# MISCFILES
+####################################################
+#---------------------------------------------------
+interface(`hardhat_miscfiles_manage_localization',`
+    gen_require(`
+        type locale_t;
+    ')
+    hardhat_manage_dirs_pattern($1, locale_t, locale_t)
+    hardhat_manage_files_pattern($1, locale_t, locale_t)
+    hardhat_manage_lnk_files_pattern($1, locale_t, locale_t)
+')
+#---------------------------------------------------
+interface(`hardhat_miscfiles_read_generic_certs',`
+    gen_require(`
+        type cert_t;
+    ')
+    hardhat_list_dir_perms($1, cert_t)
+    hardhat_read_files_pattern($1, cert_t, cert_t)
+    read_lnk_files_pattern($1, cert_t, cert_t)
+')

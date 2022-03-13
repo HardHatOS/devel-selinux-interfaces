@@ -1,0 +1,11 @@
+####################################################
+# PS
+####################################################
+#---------------------------------------------------
+interface(`hardhat_ps_process_pattern',`
+    hardhat_read_file_perms($1, $2)
+    allow $1 $2:lnk_file { read_lnk_file_perms };
+    allow $1 $2:dir { search_dir_perms };
+    allow $1 $2:dir { read };
+    allow $1 $2:process { getattr };
+')

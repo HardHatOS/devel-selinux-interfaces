@@ -1,0 +1,11 @@
+####################################################
+# BIND
+####################################################
+#---------------------------------------------------
+interface(`hardhat_bind_domtrans',`
+    gen_require(`
+        type named_t, named_exec_t;
+    ')
+    corecmd_search_bin($1)
+    hardhat_domtrans_pattern($1, named_exec_t, named_t)
+')

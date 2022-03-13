@@ -1,0 +1,17 @@
+####################################################
+# DELETE
+####################################################
+#---------------------------------------------------
+interface(`hardhat_del_entry_dir_perms',`
+    allow $1 $2:dir { getattr lock open remove_name search write };
+')
+#---------------------------------------------------
+interface(`hardhat_delete_files_pattern',`
+    allow $1 $3:file { delete_file_perms };
+    hardhat_del_entry_dir_perms($1, $2)
+')
+#---------------------------------------------------
+interface(`hardhat_delete_sock_files_pattern',`
+    allow $1 $3:sock_file { delete_sock_file_perms };
+    hardhat_del_entry_dir_perms($1, $2)
+')

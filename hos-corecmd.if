@@ -1,0 +1,95 @@
+####################################################
+# CORECMD
+####################################################
+#---------------------------------------------------
+interface(`hardhat_corecmd_bin_domtrans',`
+    gen_require(`
+        type bin_t, usr_t;
+    ')
+    hardhat_corecmd_bin_spec_domtrans($1, $2)
+    type_transition $1 bin_t:process $2;
+    type_transition $1 usr_t:process $2;
+')
+#---------------------------------------------------
+interface(`hardhat_corecmd_bin_spec_domtrans',`
+    gen_require(`
+        type bin_t, usr_t;
+    ')   
+    read_lnk_files_pattern($1, bin_t, bin_t)
+    read_lnk_files_pattern($1, usr_t, usr_t)
+    hardhat_domain_transition_pattern($1, bin_t, $2)
+    hardhat_domain_transition_pattern($1, usr_t, $2)
+')
+#---------------------------------------------------
+interface(`hardhat_corecmd_exec_bin',`
+    gen_require(`
+        type bin_t;
+    ')
+    corecmd_search_bin($1)
+    hardhat_can_exec($1, bin_t)
+')
+#---------------------------------------------------
+interface(`hardhat_corecmd_exec_shell',`
+    gen_require(`
+        type bin_t, shell_exec_t;
+    ')
+    allow $1 bin_t:dir { read };
+    corecmd_search_bin($1)
+    hardhat_can_exec($1, shell_exec_t)
+')
+#---------------------------------------------------
+interface(`hardhat_corecmd_list_bin',`
+    gen_require(`
+        type bin_t;
+    ')
+    corecmd_read_bin_symlinks($1)
+    hardhat_list_dirs_pattern($1, bin_t, bin_t)
+')
+#---------------------------------------------------
+interface(`hardhat_corecmd_mmap_bin_files',`
+    gen_require(`
+        type bin_t;
+    ')
+    corecmd_read_bin_symlinks($1)
+    hardhat_mmap_exec_files_pattern($1, bin_t, bin_t)
+')
+#---------------------------------------------------
+interface(`hardhat_corecmd_read_bin_files',`
+    gen_require(`
+        type bin_t;
+    ')
+    corecmd_read_bin_symlinks($1)
+    hardhat_read_files_pattern($1, bin_t, bin_t)
+')
+#---------------------------------------------------
+interface(`hardhat_corecmd_read_bin_pipes',`
+    gen_require(`
+        type bin_t;
+    ')
+    corecmd_read_bin_symlinks(bin_t)
+    hardhat_read_fifo_files_pattern($1, bin_t, bin_t)
+')
+#---------------------------------------------------
+interface(`hardhat_corecmd_shell_entry_type',`
+    gen_require(`
+        type shell_exec_t;
+    ')
+    hardhat_domain_entry_file($1, shell_exec_t) 
+')
+#---------------------------------------------------
+interface(`hardhat_corecmd_shell_domtrans',`
+    gen_require(`
+        type shell_exec_t;
+    ')
+    hardhat_corecmd_shell_spec_domtrans($1, $2)
+    type_transition $1 shell_exec_t:process $2;
+')
+#---------------------------------------------------
+interface(`hardhat_corecmd_shell_spec_domtrans',`
+    gen_require(`
+        type bin_t, shell_exec_t;
+    ')
+    hardhat_domain_transition_pattern($1, shell_exec_t, $2)
+    hardhat_list_dirs_pattern($1, bin_t, bin_t)
+    read_lnk_files_pattern($1, bin_t, bin_t)
+')

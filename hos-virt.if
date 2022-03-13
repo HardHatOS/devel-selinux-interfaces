@@ -1,0 +1,10 @@
+####################################################
+# VIRT
+####################################################
+#---------------------------------------------------
+interface(`hardhat_virt_list_sandbox_dirs',`
+    gen_require(`
+        type svirt_sandbox_file_t;
+    ')
+    hardhat_list_dirs_pattern($1, svirt_sandbox_file_t, svirt_sandbox_file_t)
+')

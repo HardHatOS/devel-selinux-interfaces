@@ -1,0 +1,18 @@
+####################################################
+# UDEV
+####################################################
+#---------------------------------------------------
+interface(`hardhat_udev_read_db',`
+    hardhat_udev_read_pid_files($1)
+')
+#---------------------------------------------------
+interface(`hardhat_udev_read_pid_files',`
+    gen_require(`
+        type udev_var_run_t;
+    ')
+    allow $1 udev_var_run_t:dir { read };
+    files_search_pids($1)
+    hardhat_dev_list_all_dev_nodes($1) 
+    hardhat_read_files_pattern($1, udev_var_run_t, udev_var_run_t)
+    read_lnk_files_pattern($1, udev_var_run_t, udev_var_run_t)
+')
