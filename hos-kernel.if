@@ -2,17 +2,17 @@
 # KERNEL
 ####################################################
 #---------------------------------------------------
-interface(`hardhat_kernel_list_proc',`
+interface(`hos_kernel_list_proc',`
     gen_require(`
         type proc_t;
     ')
-    hardhat_list_dirs_pattern($1, proc_t, proc_t)
+    hos_list_dirs_pattern($1, proc_t, proc_t)
 ')
 #---------------------------------------------------
-interface(`hardhat_kernel_read_kernel_sysctls',`
+interface(`hos_kernel_read_kernel_sysctls',`
     gen_require(`
         type proc_t, sysctl_kernel_t, sysctl_t;
     ')
-    hardhat_list_dirs_pattern($1, { proc_t sysctl_t }, sysctl_kernel_t)
-    hardhat_read_files_pattern($1, { proc_t sysctl_t sysctl_kernel_t }, sysctl_kernel_t)
+    hos_list_dirs_pattern($1, { proc_t sysctl_t }, sysctl_kernel_t)
+    hos_read_files_pattern($1, { proc_t sysctl_t sysctl_kernel_t }, sysctl_kernel_t)
 ')

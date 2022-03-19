@@ -2,7 +2,7 @@
 # R
 ####################################################
 #---------------------------------------------------
-interface(`hardhat_r_netlink_socket_perms',`
+interface(`hos_r_netlink_socket_perms',`
     allow $1 $2:$3 { nlmsg_read };
-    hardhat_create_socket_perms($1, $2, $3)
+    hos_create_socket_perms($1, $2, $3)
 ')

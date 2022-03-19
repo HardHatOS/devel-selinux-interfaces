@@ -2,7 +2,7 @@
 # SELINUX
 ####################################################
 #---------------------------------------------------
-interface(`hardhat_selinux_get_fs_mount',`
+interface(`hos_selinux_get_fs_mount',`
     gen_require(`
         type security_t;
     ')
@@ -13,7 +13,7 @@ interface(`hardhat_selinux_get_fs_mount',`
     kernel_read_system_state($1)
 ')
 #---------------------------------------------------
-interface(`hardhat_selinux_compute_access_vector',`
+interface(`hos_selinux_compute_access_vector',`
     gen_require(`
         type security_t;
     ')
@@ -21,11 +21,11 @@ interface(`hardhat_selinux_compute_access_vector',`
     allow $1 security_t:security { compute_av };
     dev_getattr_sysfs_fs($1)
     dev_search_sysfs($1)
-    hardhat_list_dir_perms($1, security_t)
-    hardhat_rw_file_perms($1, security_t, file)
+    hos_list_dir_perms($1, security_t)
+    hos_rw_file_perms($1, security_t, file)
 ')
 #---------------------------------------------------
-interface(`hardhat_selinux_compute_create_context',`
+interface(`hos_selinux_compute_create_context',`
     gen_require(`
         type security_t;
     ')
@@ -33,11 +33,11 @@ interface(`hardhat_selinux_compute_create_context',`
     allow $1 security_t:security { compute_create };
     dev_getattr_sysfs_fs($1)
     dev_search_sysfs($1)
-    hardhat_list_dir_perms($1, security_t)
-    hardhat_rw_file_perms($1, security_t, file)
+    hos_list_dir_perms($1, security_t)
+    hos_rw_file_perms($1, security_t, file)
 ')
 #---------------------------------------------------
-interface(`hardhat_selinux_compute_relabel_context',`
+interface(`hos_selinux_compute_relabel_context',`
     gen_require(`
         type security_t;
     ')
@@ -45,11 +45,11 @@ interface(`hardhat_selinux_compute_relabel_context',`
     allow $1 security_t:security { compute_relabel };
     dev_getattr_sysfs_fs($1)
     dev_search_sysfs($1)
-    hardhat_list_dir_perms($1, security_t)
-    hardhat_rw_file_perms($1, security_t, file)
+    hos_list_dir_perms($1, security_t)
+    hos_rw_file_perms($1, security_t, file)
 ')
 #---------------------------------------------------
-interface(`hardhat_selinux_compute_user_contexts',`
+interface(`hos_selinux_compute_user_contexts',`
     gen_require(`
         type security_t;
     ')
@@ -57,11 +57,11 @@ interface(`hardhat_selinux_compute_user_contexts',`
     allow $1 security_t:security { compute_user };
     dev_getattr_sysfs_fs($1)
     dev_search_sysfs($1)
-    hardhat_list_dir_perms($1, security_t)
-    hardhat_rw_file_perms($1, security_t, file)
+    hos_list_dir_perms($1, security_t)
+    hos_rw_file_perms($1, security_t, file)
 ')
 #---------------------------------------------------
-interface(`hardhat_selinux_validate_context',`
+interface(`hos_selinux_validate_context',`
     gen_require(`
         type security_t;
     ')
@@ -70,6 +70,6 @@ interface(`hardhat_selinux_validate_context',`
     allow $1 security_t:security { check_context };
     dev_getattr_sysfs_fs($1)
     dev_search_sysfs($1)
-    hardhat_list_dir_perms($1, security_t)
-    hardhat_rw_file_perms($1, security_t, file)
+    hos_list_dir_perms($1, security_t)
+    hos_rw_file_perms($1, security_t, file)
 ')

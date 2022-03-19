@@ -2,6 +2,6 @@
 # ADD
 ####################################################
 #---------------------------------------------------
-interface(`hardhat_add_entry_dir_perms',`
+interface(`hos_add_entry_dir_perms',`
     allow $1 $2:dir { add_name getattr open search write };
 ')

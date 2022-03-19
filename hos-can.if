@@ -2,10 +2,10 @@
 # CAN
 ####################################################
 #---------------------------------------------------
-interface(`hardhat_can_exec',`
+interface(`hos_can_exec',`
     gen_require(`
         type user_t;
     ')
     allow $1 $2:file { execute execute_no_trans map };
-    hardhat_read_file_perms($1, $2)
+    hos_read_file_perms($1, $2)
 ')

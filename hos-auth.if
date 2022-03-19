@@ -2,32 +2,32 @@
 # AUTH
 ####################################################
 #---------------------------------------------------
-interface(`hardhat_auth_read_passwd_file',`
+interface(`hos_auth_read_passwd_file',`
     gen_require(`
         type passwd_file_t;
     ')
-    hardhat_read_file_perms($1, passwd_file_t)
+    hos_read_file_perms($1, passwd_file_t)
     init_dbus_chat($1)
 ')
 #---------------------------------------------------
-interface(`hardhat_auth_read_pam_console_data',`
+interface(`hos_auth_read_pam_console_data',`
     gen_require(`
         type pam_var_console_t;
     ')
     files_search_pids($1)
-    hardhat_list_dir_perms($1, pam_var_console_t)
-    hardhat_read_file_perms($1, pam_var_console_t)
+    hos_list_dir_perms($1, pam_var_console_t)
+    hos_read_file_perms($1, pam_var_console_t)
 ')
 #---------------------------------------------------
-interface(`hardhat_auth_read_shadow',`
+interface(`hos_auth_read_shadow',`
     auth_can_read_shadow_password($1)
-    hardhat_auth_tunable_read_shadow($1)
+    hos_auth_tunable_read_shadow($1)
 ')
 #---------------------------------------------------
-interface(`hardhat_auth_tunable_read_shadow',`
+interface(`hos_auth_tunable_read_shadow',`
     gen_require(`
         type shadow_t;
     ')
-    hardhat_files_list_etc($1)
-    hardhat_read_file_perms($1, shadow_t)
+    hos_files_list_etc($1)
+    hos_read_file_perms($1, shadow_t)
 ')

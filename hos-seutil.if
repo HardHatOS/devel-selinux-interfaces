@@ -2,22 +2,22 @@
 # SEUTIL
 ####################################################
 #---------------------------------------------------
-interface(`hardhat_seutil_read_config',`
+interface(`hos_seutil_read_config',`
     gen_require(`
         type selinux_config_t;
     ')
     files_search_etc($1)
-    hardhat_list_dir_perms($1, selinux_config_t)
-    hardhat_read_files_pattern($1, selinux_config_t, selinux_config_t)
+    hos_list_dir_perms($1, selinux_config_t)
+    hos_read_files_pattern($1, selinux_config_t, selinux_config_t)
     read_lnk_files_pattern($1, selinux_config_t, selinux_config_t)
 ')
 #---------------------------------------------------
-interface(`hardhat_seutil_read_default_contexts',`
+interface(`hos_seutil_read_default_contexts',`
     gen_require(`
         type selinux_config_t, default_context_t;
     ')
     allow $1 selinux_config_t:dir { search_dir_perms };
     files_search_etc($1)
-    hardhat_list_dir_perms($1, default_context_t)
-    hardhat_read_files_pattern($1, default_context_t, default_context_t)
+    hos_list_dir_perms($1, default_context_t)
+    hos_read_files_pattern($1, default_context_t, default_context_t)
 ')

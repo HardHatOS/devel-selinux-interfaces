@@ -1,6 +1,6 @@
 ####################################################
 # EXEC
 ####################################################
-interface(`hardhat_exec_file_perms',`
+interface(`hos_exec_file_perms',`
     allow $1 $2:$3 { execute execute_no_trans getattr map open read };
 ')

@@ -2,7 +2,7 @@
 # MMAP
 ####################################################
 #---------------------------------------------------
-interface(`hardhat_mmap_exec_files_pattern',`
+interface(`hos_mmap_exec_files_pattern',`
     allow $1 $2:dir { search_dir_perms };
     allow $1 $3:file { execute getattr map open read };
 ')

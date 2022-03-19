@@ -2,9 +2,9 @@
 # XSERVER
 ####################################################
 #---------------------------------------------------
-interface(`hardhat_xserver_manage_user_xauth',`
+interface(`hos_xserver_manage_user_xauth',`
     gen_require(`
         type xauth_home_t;
     ')
-    hardhat_manage_file_perms($1, xauth_home_t, file)
+    hos_manage_file_perms($1, xauth_home_t, file)
 ')

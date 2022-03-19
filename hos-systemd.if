@@ -2,7 +2,7 @@
 # SYSTEMD
 ####################################################
 #---------------------------------------------------
-interface(`hardhat_systemd_exec_systemctl',`
+interface(`hos_systemd_exec_systemctl',`
     gen_require(`
         type systemd_systemctl_exec_t;
     ')
@@ -10,55 +10,55 @@ interface(`hardhat_systemd_exec_systemctl',`
     dontaudit $1 self:capability { net_admin sys_ptrace };
     # systemctl tries to adjust its RLIMIT_NOFILE right when it is started
     dontaudit $1 self:process { setrlimit };
-    hardhat_can_exec($1, systemd_systemctl_exec_t)
-    hardhat_fs_list_cgroup_dirs($1)
-    hardhat_fs_read_cgroup_files($1)
-    hardhat_fs_read_efivarfs_files($1)
-    hardhat_init_read_state($1)
-    hardhat_systemd_login_list_pid_dirs($1)
-    hardhat_systemd_login_read_pid_files($1)
-    hardhat_systemd_passwd_agent_exec($1)
+    hos_can_exec($1, systemd_systemctl_exec_t)
+    hos_fs_list_cgroup_dirs($1)
+    hos_fs_read_cgroup_files($1)
+    hos_fs_read_efivarfs_files($1)
+    hos_init_read_state($1)
+    hos_systemd_login_list_pid_dirs($1)
+    hos_systemd_login_read_pid_files($1)
+    hos_systemd_passwd_agent_exec($1)
     init_list_pid_dirs($1)
     init_stream_send($1)
     init_stream_connect($1)
     systemd_list_unit_dirs($1)
 ')
 #---------------------------------------------------
-interface(`hardhat_systemd_login_list_pid_dirs',`
+interface(`hos_systemd_login_list_pid_dirs',`
     gen_require(`
         type systemd_logind_var_run_t;
     ')
     files_search_pids($1)
-    hardhat_list_dirs_pattern($1, systemd_logind_var_run_t, systemd_logind_var_run_t)
+    hos_list_dirs_pattern($1, systemd_logind_var_run_t, systemd_logind_var_run_t)
 ')
 #---------------------------------------------------
-interface(`hardhat_systemd_login_read_pid_files',`
+interface(`hos_systemd_login_read_pid_files',`
     gen_require(`
         type systemd_logind_var_run_t;
     ')
     files_search_pids($1)
-    hardhat_read_files_pattern($1, systemd_logind_var_run_t, systemd_logind_var_run_t)
+    hos_read_files_pattern($1, systemd_logind_var_run_t, systemd_logind_var_run_t)
 ')
 #---------------------------------------------------
-interface(`hardhat_systemd_passwd_agent_domtrans',`
+interface(`hos_systemd_passwd_agent_domtrans',`
     gen_require(`
         type systemd_passwd_agent_t, systemd_passwd_agent_exec_t;
     ')
-    hardhat_domtrans_pattern($1, systemd_passwd_agent_exec_t, systemd_passwd_agent_t)
+    hos_domtrans_pattern($1, systemd_passwd_agent_exec_t, systemd_passwd_agent_t)
 ')
 #---------------------------------------------------
-interface(`hardhat_systemd_passwd_agent_exec',`
+interface(`hos_systemd_passwd_agent_exec',`
     gen_require(`
         type systemd_passwd_agent_t, systemd_passwd_agent_exec_t;
     ')
-	hardhat_can_exec($1, systemd_passwd_agent_exec_t)
+	hos_can_exec($1, systemd_passwd_agent_exec_t)
 	systemd_manage_passwd_run($1)
 ')
 #---------------------------------------------------
-interface(`hardhat_systemd_start_power_services',`
+interface(`hos_systemd_start_power_services',`
     gen_require(`
         type power_unit_file_t;
     ')
     allow $1 power_unit_file_t:service start;
-    hardhat_systemd_exec_systemctl($1)
+    hos_systemd_exec_systemctl($1)
 ')

@@ -2,10 +2,10 @@
 # GETTY
 ####################################################
 #---------------------------------------------------
-interface(`hardhat_getty_start_services',`
+interface(`hos_getty_start_services',`
     gen_require(`
         type getty_unit_file_t;
     ')
     allow $1 getty_unit_file_t:service { start };
-    hardhat_systemd_exec_systemctl($1)
+    hos_systemd_exec_systemctl($1)
 ')

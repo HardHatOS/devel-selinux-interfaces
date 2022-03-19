@@ -2,47 +2,47 @@
 # RW
 ####################################################
 #---------------------------------------------------
-interface(`hardhat_rw_chr_file_perms',`
+interface(`hos_rw_chr_file_perms',`
     allow $1 $2:chr_file { open };
-    hardhat_rw_inherited_chr_file_perms($1, $2)
+    hos_rw_inherited_chr_file_perms($1, $2)
 ')
 #---------------------------------------------------
-interface(`hardhat_rw_dir_perms',`
+interface(`hos_rw_dir_perms',`
     allow $1 $2:dir { search_dir_perms };
     allow $1 $2:dir { add_name read remove_name write };
 ')
 #---------------------------------------------------
-interface(`hardhat_rw_fifo_file_perms',`
+interface(`hos_rw_fifo_file_perms',`
     allow $1 $2:fifo_file { open };
-    hardhat_rw_inherited_fifo_file_perms($1, $2)
+    hos_rw_inherited_fifo_file_perms($1, $2)
 ')
 #---------------------------------------------------
-interface(`hardhat_rw_file_perms',`
+interface(`hos_rw_file_perms',`
     allow $1 $2:$3 { append getattr lock open read write };
 ')
 #---------------------------------------------------
-interface(`hardhat_rw_inherited_chr_file_perms',`
+interface(`hos_rw_inherited_chr_file_perms',`
     allow $1 $2:chr_file { append getattr lock read write };
 ')
 #---------------------------------------------------
-interface(`hardhat_rw_inherited_fifo_file_perms',`
+interface(`hos_rw_inherited_fifo_file_perms',`
     allow $1 $2:fifo_file { append getattr lock read write};
 ')
 #---------------------------------------------------
-interface(`hardhat_rw_inherited_term_perms',`
+interface(`hos_rw_inherited_term_perms',`
     allow $1 $2:$3 { append getattr read write };
 ')
 #---------------------------------------------------
-interface(`hardhat_rw_socket_perms',`
+interface(`hos_rw_socket_perms',`
     allow $1 $2:$3 { append bind connect getattr getopt lock read setattr setopt shutdown write };
 ')
 #---------------------------------------------------
-interface(`hardhat_rw_stream_socket_perms',`
+interface(`hos_rw_stream_socket_perms',`
     allow $1 $2:$3 { accept listen };
-    hardhat_rw_socket_perms($1, $2, $3)
+    hos_rw_socket_perms($1, $2, $3)
 ')
 #---------------------------------------------------
-interface(`hardhat_rw_term_perms',`
+interface(`hos_rw_term_perms',`
     allow $1 $2:$3 { open };
-    hardhat_rw_inherited_term_perms($1, $2, $3)
+    hos_rw_inherited_term_perms($1, $2, $3)
 ')

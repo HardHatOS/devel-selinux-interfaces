@@ -2,11 +2,11 @@
 # THUMB
 ####################################################
 #---------------------------------------------------
-interface(`hardhat_thumb_domtrans',`
+interface(`hos_thumb_domtrans',`
     gen_require(`
         type thumb_t, thumb_exec_t;
     ')
     corecmd_search_bin($1)
     dontaudit thumb_t $1:unix_stream_socket { getattr read write };
-    hardhat_domtrans_pattern($1, thumb_exec_t, thumb_t)
+    hos_domtrans_pattern($1, thumb_exec_t, thumb_t)
 ')

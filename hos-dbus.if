@@ -10,11 +10,11 @@
 ##  Domain allowed access
 ##  </summary>
 ## </param>
-interface(`hardhat_dbus_exec_dbusd',`
+interface(`hos_dbus_exec_dbusd',`
     gen_require(`
         type dbusd_exec_t;
     ')
-    hardhat_can_exec($1, dbusd_exec_t)
+    hos_can_exec($1, dbusd_exec_t)
 ')
 #---------------------------------------------------
 ## <summary>
@@ -25,12 +25,12 @@ interface(`hardhat_dbus_exec_dbusd',`
 ##  Domain allowed access.
 ##  </summary>
 ## </param>
-interface(`hardhat_dbus_read_config',`
+interface(`hos_dbus_read_config',`
     gen_require(`
         type dbusd_etc_t;
     ')
-    hardhat_list_dir_perms($1, dbusd_etc_t)
-    hardhat_read_file_perms($1, dbusd_etc_t)
+    hos_list_dir_perms($1, dbusd_etc_t)
+    hos_read_file_perms($1, dbusd_etc_t)
 ')
 #---------------------------------------------------
 ## <summary>
@@ -52,7 +52,7 @@ interface(`hardhat_dbus_read_config',`
 ##  User domain for the role
 ##  </summary>
 ## </param>
-template(`hardhat_dbus_role_template',`
+template(`hos_dbus_role_template',`
     gen_require(`
         attribute dbusd_unconfined, session_bus_type;
         class dbus { send_msg acquire_svc };
@@ -66,7 +66,7 @@ template(`hardhat_dbus_role_template',`
     role $2 types $1_dbusd_t;
     application_domain($1_dbusd_t, dbusd_exec_t)
     ubac_constrained($1_dbusd_t)
-    hardhat_selinux_get_fs_mount($1_dbusd_t)
+    hos_selinux_get_fs_mount($1_dbusd_t)
     kernel_read_system_state($1_dbusd_t)
     userdom_home_manager($1_dbusd_t)
     ##############################
@@ -76,7 +76,7 @@ template(`hardhat_dbus_role_template',`
     allow $3 $1_dbusd_t:unix_stream_socket { accept connectto create listen };
     allow $1_dbusd_t $3:unix_stream_socket { accept getattr getopt read write };
     allow $1_dbusd_t $3:unix_dgram_socket { sendto };
-    hardhat_rw_socket_perms($3, $1_dbusd_t, unix_stream_socket)
+    hos_rw_socket_perms($3, $1_dbusd_t, unix_stream_socket)
     # SE-DBus specific permissions
     #allow { dbusd_unconfined $3 } $1_dbusd_t:dbus { send_msg acquire_svc };
     allow $3 system_dbusd_t:dbus { send_msg acquire_svc };
@@ -87,11 +87,11 @@ template(`hardhat_dbus_role_template',`
     allow $1_dbusd_t $3:system { start reload };
     allow $1_dbusd_t session_dbusd_tmp_t:service { start stop };
     allow $3 $1_dbusd_t:process { signal_perms };
-    hardhat_manage_dir_perms($3, session_dbusd_tmp_t)
-    hardhat_manage_file_perms($3, session_dbusd_tmp_t, file)
-    hardhat_can_exec($1_dbusd_t, dbusd_exec_t)
-    hardhat_domtrans_pattern($3, dbusd_exec_t, $1_dbusd_t)
-    hardhat_ps_process_pattern($3, $1_dbusd_t)
+    hos_manage_dir_perms($3, session_dbusd_tmp_t)
+    hos_manage_file_perms($3, session_dbusd_tmp_t, file)
+    hos_can_exec($1_dbusd_t, dbusd_exec_t)
+    hos_domtrans_pattern($3, dbusd_exec_t, $1_dbusd_t)
+    hos_ps_process_pattern($3, $1_dbusd_t)
     tunable_policy(`deny_ptrace',`',`
         allow $3 $1_dbusd_t:process { ptrace };
     ')
@@ -101,12 +101,12 @@ template(`hardhat_dbus_role_template',`
     auth_use_nsswitch($1_dbusd_t)
     dontaudit $1_dbusd_t self:capability { net_admin };
     files_config_all_files($1_dbusd_t)
-    hardhat_corecmd_bin_domtrans($1_dbusd_t, $1_t)
-    hardhat_corecmd_shell_domtrans($1_dbusd_t, $1_t)
-    hardhat_rw_fifo_file_perms($3, $1_dbusd_t)
+    hos_corecmd_bin_domtrans($1_dbusd_t, $1_t)
+    hos_corecmd_shell_domtrans($1_dbusd_t, $1_t)
+    hos_rw_fifo_file_perms($3, $1_dbusd_t)
     logging_send_syslog_msg($1_dbusd_t)
     optional_policy(`
-        hardhat_mozilla_domtrans_spec($1_dbusd_t, $1_t)
+        hos_mozilla_domtrans_spec($1_dbusd_t, $1_t)
     ')
     optional_policy(`
         systemd_start_systemd_services($1_dbusd_t)
@@ -122,7 +122,7 @@ template(`hardhat_dbus_role_template',`
 ##  Domain allowed access.
 ##  </summary>
 ## </param>
-interface(`hardhat_dbus_system_bus_client',`
+interface(`hos_dbus_system_bus_client',`
     gen_require(`
         attribute dbusd_unconfined;
         class dbus send_msg;
@@ -133,8 +133,8 @@ interface(`hardhat_dbus_system_bus_client',`
     allow $1 { system_dbusd_t self }:dbus { send_msg };
     allow { system_dbusd_t dbusd_unconfined } $1:dbus { send_msg };
     files_search_var_lib($1)
-    hardhat_read_files_pattern($1, system_dbusd_var_lib_t, system_dbusd_var_lib_t)
-    hardhat_dev_read_urand($1)
+    hos_read_files_pattern($1, system_dbusd_var_lib_t, system_dbusd_var_lib_t)
+    hos_dev_read_urand($1)
     read_lnk_files_pattern($1, system_dbusd_var_lib_t, system_dbusd_var_lib_t)
     # For connecting to the bus
     dbus_read_config($1)
@@ -153,12 +153,12 @@ interface(`hardhat_dbus_system_bus_client',`
 ##  Domain allowed access.
 ##  </summary>
 ## </param>
-interface(`hardhat_dbus_read_lib_files',`
+interface(`hos_dbus_read_lib_files',`
     gen_require(`
         type system_dbusd_var_lib_t;
     ')
     files_search_var_lib($1)
-    hardhat_read_files_pattern($1, system_dbusd_var_lib_t, system_dbusd_var_lib_t)
+    hos_read_files_pattern($1, system_dbusd_var_lib_t, system_dbusd_var_lib_t)
     read_lnk_files_pattern($1, system_dbusd_var_lib_t, system_dbusd_var_lib_t)
 ')
 #---------------------------------------------------
@@ -171,12 +171,12 @@ interface(`hardhat_dbus_read_lib_files',`
 ##  Domain allowed access.
 ##  </summary>
 ## </param>
-interface(`hardhat_dbus_manage_lib_files',`
+interface(`hos_dbus_manage_lib_files',`
     gen_require(`
         type system_dbusd_var_lib_t;
     ')
     files_search_var_lib($1)
-    hardhat_manage_files_pattern($1, system_dbusd_var_lib_t, system_dbusd_var_lib_t)
+    hos_manage_files_pattern($1, system_dbusd_var_lib_t, system_dbusd_var_lib_t)
 ')
 #---------------------------------------------------
 ## <summary>
@@ -199,13 +199,13 @@ interface(`hardhat_dbus_manage_lib_files',`
 ##  entry point to this domain.
 ##  </summary>
 ## </param>
-interface(`hardhat_dbus_session_domain',`
+interface(`hos_dbus_session_domain',`
     gen_require(`
         type $1_dbusd_t;
     ')
     dbus_connect_session_bus($3)
     dbus_session_bus_client($3)
-    hardhat_domtrans_pattern($1_dbusd_t, $2, $3)
+    hos_domtrans_pattern($1_dbusd_t, $2, $3)
 ')
 #---------------------------------------------------
 ## <summary>
@@ -222,7 +222,7 @@ interface(`hardhat_dbus_session_domain',`
 ##  Type of the program to be used as an entry point to this domain.
 ##  </summary>
 ## </param>
-interface(`hardhat_dbus_system_domain',`
+interface(`hos_dbus_system_domain',`
     gen_require(`
         attribute system_bus_type;
         role system_r;
@@ -230,9 +230,9 @@ interface(`hardhat_dbus_system_domain',`
     ')
     domain_type($1)
     typeattribute $1 system_bus_type;
-    hardhat_domtrans_pattern(system_dbusd_t, $2, $1)
-    hardhat_domain_entry_file($1, $2)
-    hardhat_ps_process_pattern($1, system_dbusd_t)
+    hos_domtrans_pattern(system_dbusd_t, $2, $1)
+    hos_domain_entry_file($1, $2)
+    hos_ps_process_pattern($1, system_dbusd_t)
     init_system_domain($1, $2)
 ')
 #---------------------------------------------------
@@ -244,12 +244,12 @@ interface(`hardhat_dbus_system_domain',`
 ##  Domain allowed access.
 ##  </summary>
 ## </param>
-interface(`hardhat_dbus_delete_pid_files',`
+interface(`hos_dbus_delete_pid_files',`
     gen_require(`
         type system_dbusd_var_run_t;
     ')
     files_search_pids($1)
-    hardhat_delete_files_pattern($1, system_dbusd_var_run_t, system_dbusd_var_run_t)
+    hos_delete_files_pattern($1, system_dbusd_var_run_t, system_dbusd_var_run_t)
 ')
 #---------------------------------------------------
 ## <summary>
@@ -260,13 +260,13 @@ interface(`hardhat_dbus_delete_pid_files',`
 ##  Domain allowed access.
 ##  </summary>
 ## </param>
-interface(`hardhat_dbus_read_pid_files',`
+interface(`hos_dbus_read_pid_files',`
     gen_require(`
         type system_dbusd_var_run_t;
     ')
     files_search_pids($1)
-    hardhat_list_dirs_pattern($1, system_dbusd_var_run_t, system_dbusd_var_run_t)
-    hardhat_read_files_pattern($1, system_dbusd_var_run_t, system_dbusd_var_run_t)
+    hos_list_dirs_pattern($1, system_dbusd_var_run_t, system_dbusd_var_run_t)
+    hos_read_files_pattern($1, system_dbusd_var_run_t, system_dbusd_var_run_t)
 ')
 #---------------------------------------------------
 ## <summary>
@@ -277,12 +277,12 @@ interface(`hardhat_dbus_read_pid_files',`
 ##  Domain allowed access.
 ##  </summary>
 ## </param>
-interface(`hardhat_dbus_read_pid_sock_files',`
+interface(`hos_dbus_read_pid_sock_files',`
     gen_require(`
         type system_dbusd_var_run_t;
     ')
     files_search_pids($1)
-    hardhat_list_dirs_pattern($1, system_dbusd_var_run_t, system_dbusd_var_run_t)
+    hos_list_dirs_pattern($1, system_dbusd_var_run_t, system_dbusd_var_run_t)
     read_sock_files_pattern($1, system_dbusd_var_run_t, system_dbusd_var_run_t)
 ')
 #---------------------------------------------------
@@ -295,11 +295,11 @@ interface(`hardhat_dbus_read_pid_sock_files',`
 ##      </summary>
 ## </param>
 #
-interface(`hardhat_dbus_filetrans_named_content_system',`
+interface(`hos_dbus_filetrans_named_content_system',`
     gen_require(`
         type system_dbusd_var_lib_t;
     ')
-    hardhat_files_var_filetrans($1, system_dbusd_var_lib_t, dir, "ibus")
+    hos_files_var_filetrans($1, system_dbusd_var_lib_t, dir, "ibus")
 ')
 #---------------------------------------------------
 ## <summary>
@@ -310,11 +310,11 @@ interface(`hardhat_dbus_filetrans_named_content_system',`
 ##      Domain allowed access.
 ##      </summary>
 ## </param>
-interface(`hardhat_dbus_manage_session_tmp_dirs',`
+interface(`hos_dbus_manage_session_tmp_dirs',`
     gen_require(`
         type session_dbusd_tmp_t;
     ')
-    hardhat_manage_dirs_pattern($1, session_dbusd_tmp_t, session_dbusd_tmp_t)
+    hos_manage_dirs_pattern($1, session_dbusd_tmp_t, session_dbusd_tmp_t)
 ')
 #---------------------------------------------------
 ## <summary>
@@ -326,11 +326,11 @@ interface(`hardhat_dbus_manage_session_tmp_dirs',`
 ##      </summary>
 ## </param>
 #
-interface(`hardhat_dbus_delete_session_tmp_sock_files',`
+interface(`hos_dbus_delete_session_tmp_sock_files',`
     gen_require(`
         type session_dbusd_tmp_t;
     ')
-    hardhat_delete_sock_files_pattern($1, session_dbusd_tmp_t, session_dbusd_tmp_t)
+    hos_delete_sock_files_pattern($1, session_dbusd_tmp_t, session_dbusd_tmp_t)
 ')
 #---------------------------------------------------
 ## <summary>
@@ -341,11 +341,11 @@ interface(`hardhat_dbus_delete_session_tmp_sock_files',`
 ##      Domain allowed access.
 ##      </summary>
 ## </param>
-interface(`hardhat_dbus_create_session_tmp_sock_files',`
+interface(`hos_dbus_create_session_tmp_sock_files',`
     gen_require(`
         type session_dbusd_tmp_t;
     ')
-    hardhat_create_sock_files_pattern($1, session_dbusd_tmp_t, session_dbusd_tmp_t)
+    hos_create_sock_files_pattern($1, session_dbusd_tmp_t, session_dbusd_tmp_t)
 ')
 #---------------------------------------------------
 ## <summary>
@@ -356,12 +356,12 @@ interface(`hardhat_dbus_create_session_tmp_sock_files',`
 ##  Domain allowed to transition.
 ##  </summary>
 ## </param>
-interface(`hardhat_dbus_systemctl',`
+interface(`hos_dbus_systemctl',`
     gen_require(`
         type dbusd_unit_file_t;
     ')
     allow $1 dbusd_unit_file_t:service { manage_service_perms };
-    hardhat_read_file_perms($1, dbusd_unit_file_t)
-    hardhat_systemd_exec_systemctl($1)
+    hos_read_file_perms($1, dbusd_unit_file_t)
+    hos_systemd_exec_systemctl($1)
     init_reload_services($1)
 ')

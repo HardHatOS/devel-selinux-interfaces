@@ -2,39 +2,39 @@
 # DEV
 ####################################################
 #---------------------------------------------------
-interface(`hardhat_dev_list_all_dev_nodes',`
+interface(`hos_dev_list_all_dev_nodes',`
     gen_require(`
         type device_t;
     ')
-    hardhat_list_dirs_pattern($1, device_t, device_t)
+    hos_list_dirs_pattern($1, device_t, device_t)
     read_lnk_files_pattern($1, device_t, device_t)
 ')
 #---------------------------------------------------
-interface(`hardhat_dev_list_sysfs',`
+interface(`hos_dev_list_sysfs',`
     gen_require(`
         type sysfs_t;
     ')
-    hardhat_list_dirs_pattern($1, sysfs_t, sysfs_t)
+    hos_list_dirs_pattern($1, sysfs_t, sysfs_t)
     read_lnk_files_pattern($1, sysfs_t, sysfs_t)
 ')
 #---------------------------------------------------
-interface(`hardhat_dev_read_sysfs',`
+interface(`hos_dev_read_sysfs',`
     gen_require(`
         type sysfs_t;
     ')
-    hardhat_read_files_pattern($1, sysfs_t, sysfs_t)
-    hardhat_list_dirs_pattern($1, sysfs_t, sysfs_t)
+    hos_read_files_pattern($1, sysfs_t, sysfs_t)
+    hos_list_dirs_pattern($1, sysfs_t, sysfs_t)
     read_lnk_files_pattern($1, sysfs_t, sysfs_t)
 ')
 #---------------------------------------------------
-interface(`hardhat_dev_read_urand',`
+interface(`hos_dev_read_urand',`
     gen_require(`
         type device_t, urandom_device_t;
     ')
-    hardhat_read_chr_files_pattern($1, device_t, urandom_device_t)
+    hos_read_chr_files_pattern($1, device_t, urandom_device_t)
 ')
 #---------------------------------------------------
-interface(`hardhat_dev_rw_dri',`
+interface(`hos_dev_rw_dri',`
     gen_require(`
         type device_t, dri_device_t;
     ')
@@ -42,7 +42,7 @@ interface(`hardhat_dev_rw_dri',`
     allow $1 dri_device_t:chr_file { append getattr ioctl map open read write };
 ')
 #---------------------------------------------------
-interface(`hardhat_dev_rw_inherited_dri',`
+interface(`hos_dev_rw_inherited_dri',`
     gen_require(`
         type device_t, dri_device_t;
     ')
@@ -50,7 +50,7 @@ interface(`hardhat_dev_rw_inherited_dri',`
     allow $1 dri_device_t:chr_file { append getattr ioctl read write };
 ')
 #---------------------------------------------------
-interface(`hardhat_dev_rw_inherited_input_dev',`
+interface(`hos_dev_rw_inherited_input_dev',`
     gen_require(`
         type device_t, event_device_t;
     ')
