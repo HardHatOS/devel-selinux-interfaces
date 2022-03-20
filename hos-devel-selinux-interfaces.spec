@@ -2,7 +2,7 @@ BuildArch: noarch
 BuildRequires: make, selinux-policy-devel
 Group: System Environment/Base
 License: GPLv3
-Name: hos-selinux-access-interfaces
+Name: hos-devel-selinux-interfaces
 Release: 1%{?dist}
 Requires: policycoreutils, libselinux-utils
 Source0: hos-add.if
