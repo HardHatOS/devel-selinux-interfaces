@@ -45,7 +45,7 @@ Source36: hos-userdom.if
 Source37: hos-virt.if
 Source38: hos-xserver.if
 Summary: SELinux access interfaces for Hard Hat OS (HOS)
-URL: https://github.com/HardHatOS/selinux-access-interfaces
+URL: https://github.com/HardHatOS/devel-selinux-interfaces
 Version: 1.0
 
 %description
