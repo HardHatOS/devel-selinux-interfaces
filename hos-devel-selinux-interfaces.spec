@@ -1,7 +1,7 @@
 BuildArch: noarch
-Group: System Environment/Base
 License: GPLv3
 Name: hos-devel-selinux-interfaces
+Release: 1%{?dist}
 Source0: hos-add.if
 Source1: hos-auth.if
 Source2: hos-bind.if
@@ -40,7 +40,6 @@ Source34: hos-udev.if
 Source35: hos-userdom.if
 Source36: hos-virt.if
 Source37: hos-xserver.if
-Release: 1%{?dist}
 Summary: SELinux access interfaces for Hard Hat OS (HOS)
 URL: https://github.com/HardHatOS/devel-selinux-interfaces
 Version: 1.0
