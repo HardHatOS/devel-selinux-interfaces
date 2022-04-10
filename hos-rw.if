@@ -23,7 +23,7 @@ interface(`hos_rw_file_perms',`
 #---------------------------------------------------
 interface(`hos_rw_files_pattern',`
     allow $1 $2:dir { search_dir_perms };
-    hos_rw_file_perms($1, $2, $3)
+    hos_rw_file_perms($1, $2, file)
 ')
 #---------------------------------------------------
 interface(`hos_rw_inherited_chr_file_perms',`
