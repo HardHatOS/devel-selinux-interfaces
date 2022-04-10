@@ -6,3 +6,17 @@ interface(`hos_create_sock_files_pattern',`
     allow $1 $3:sock_file { create_sock_file_perms };
     hos_add_entry_dir_perms($1, $2)
 ')
+#---------------------------------------------------
+interface(`hos_create_socket_perms',`
+    allow $1 $2:$3 { create };
+    hos_rw_socket_perms($1, $2, $3)  
+')
+#---------------------------------------------------
+interface(`hos_create_stream_socket_perms',`
+    allow $1 $2:$3 { accept listen };
+    hos_create_socket_perms($1, $2, $3)
+')
+#---------------------------------------------------
+interface(`hos_rw_socket_perms',`
+    allow $1 $2:$3 { append bind connect getattr getopt lock read setattr setopt shutdown write };
+')
