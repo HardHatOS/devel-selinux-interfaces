@@ -3,18 +3,18 @@
 ####################################################
 #---------------------------------------------------
 interface(`hos_rw_chr_file_perms',`
-    allow $1 $2:chr_file { open };
-    hos_rw_inherited_chr_file_perms($1, $2)
+    allow $1 $2:$3 { open };
+    hos_rw_inherited_chr_file_perms($1, $2, $3)
 ')
 #---------------------------------------------------
 interface(`hos_rw_dir_perms',`
-    allow $1 $2:dir { search_dir_perms };
-    allow $1 $2:dir { add_name read remove_name write };
+    allow $1 $2:$3 { search_dir_perms };
+    allow $1 $2:$3 { add_name read remove_name write };
 ')
 #---------------------------------------------------
 interface(`hos_rw_fifo_file_perms',`
-    allow $1 $2:fifo_file { open };
-    hos_rw_inherited_fifo_file_perms($1, $2)
+    allow $1 $2:$3 { open };
+    hos_rw_inherited_fifo_file_perms($1, $2, $3)
 ')
 #---------------------------------------------------
 interface(`hos_rw_file_perms',`
@@ -22,16 +22,16 @@ interface(`hos_rw_file_perms',`
 ')
 #---------------------------------------------------
 interface(`hos_rw_files_pattern',`
-    allow $1 $2:dir { search_dir_perms };
+    allow $1 $2:$3 { search_dir_perms };
     hos_rw_file_perms($1, $2, file)
 ')
 #---------------------------------------------------
 interface(`hos_rw_inherited_chr_file_perms',`
-    allow $1 $2:chr_file { append getattr lock read write };
+    allow $1 $2:$3 { append getattr lock read write };
 ')
 #---------------------------------------------------
 interface(`hos_rw_inherited_fifo_file_perms',`
-    allow $1 $2:fifo_file { append getattr lock read write};
+    allow $1 $2:$3 { append getattr lock read write};
 ')
 #---------------------------------------------------
 interface(`hos_rw_inherited_term_perms',`

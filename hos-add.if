@@ -3,5 +3,5 @@
 ####################################################
 #---------------------------------------------------
 interface(`hos_add_entry_dir_perms',`
-    allow $1 $2:dir { add_name getattr open search write };
+    allow $1 $2:$3 { add_name getattr open search write };
 ')
